@@ -1,0 +1,77 @@
+html,
+body,
+#root,
+.page {
+  height: 100%;
+  width: 100%;
+}
+
+.main-content {
+  height: 100%;
+  width: 90%;
+  margin: 0 auto;
+}
+
+/* index page */
+.index-page {
+  height: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title-bar {
+  color: white;
+  background-color: black;
+}
+
+.title {
+  font-size: xx-large;
+  font-weight: bold;
+}
+
+.query-input {
+  display: inline-block;
+  width: 300px;
+  margin: 8px 10px;
+}
+
+ul {
+  width: max-content;
+  margin: auto;
+  text-align: left;
+}
+
+/* recipe list page */
+.recipe-list__recipe {
+  margin-top: 20px;
+}
+
+.recipe-list__title {
+  font-weight: bold;
+}
+
+.recipe-list__ingredients {
+  margin-left: 20px;
+}
+
+/* other */
+.center {
+  text-align: center;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+a.title-link,
+a.title-link:visited,
+a.title-link:hover {
+  color: white;
+}
+
+a,
+a:visited,
+a:hover {
+  color: black;
+}
