@@ -2,17 +2,20 @@ import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   Switch,
-  Route
-  //   useHistory
+  Route,
+  useHistory
 } from "react-router-dom";
 import axios from "axios";
 import "./App.css";
 
-import Header from "./header";
-import ResultPage from "./resultPage";
+import Header from "./Header";
+import SearchingInput from "./SearchingInput";
+import InputRequirement from "./InputRequirement";
+import ResultContent from "./ResultContent";
 
 function App() {
-  //   const history = useHistory();
+  const history = useHistory();
+  console.log("History: ", history);
   const [ingredients, setIngredients] = useState("");
   const [recipeData, setRecipeData] = useState({});
 
@@ -20,29 +23,17 @@ function App() {
     setIngredients(newIngredients);
   };
 
-  const queryIngredients = () => {
+  const queryIngredients = path => {
     axios
       .get(`http://localhost:8080`, {
         params: { ingredients: ingredients }
       })
       .then(res => {
         setRecipeData(res.data);
-        // history.push("/SearchEngine/list");
+        console.log("Path: ", path);
         // TODO: how to jump to the next page?
       });
   };
-
-  let inputBlock = (
-    <div>
-      <input
-        className="query-input"
-        placeholder="UsedUpRemaining"
-        value={ingredients}
-        onChange={event => changeIngredients(event.target.value)}
-      />
-      <button onClick={queryIngredients}>Search</button>
-    </div>
-  );
 
   return (
     <Router>
@@ -51,32 +42,28 @@ function App() {
           <Route path={`/SearchEngine/list`}>
             <div className="title-bar center">
               <Header />
-              {inputBlock}
+              <SearchingInput
+                changeIngredients={changeIngredients}
+                queryIngredients={queryIngredients}
+                ingredients={ingredients}
+              />
             </div>
 
-            <div className="main-content">
-              <ResultPage recipe={recipeData} className="main-content" />
-            </div>
+            <ResultContent recipe={recipeData} />
           </Route>
 
           <Route path={`/SearchEngine`}>
-            <div className="title-bar center">
-              <Header />
-            </div>
+            <Header />
 
-            <div className="main-content">
-              <div className="index-page">
-                <div className="center">
-                  <div className="title">UsedUpRemaining</div>
-
-                  {inputBlock}
-
-                  <ul>
-                    <li>Type in 5 ingredients at most.</li>
-                    <li>Separated with ",".</li>
-                    <li>In the order that you want to use most to least</li>
-                  </ul>
-                </div>
+            <div className="index-content">
+              <div className="center">
+                <div className="title">UsedUpRemaining</div>
+                <SearchingInput
+                  changeIngredients={changeIngredients}
+                  queryIngredients={queryIngredients}
+                  ingredients={ingredients}
+                />
+                <InputRequirement />
               </div>
             </div>
           </Route>

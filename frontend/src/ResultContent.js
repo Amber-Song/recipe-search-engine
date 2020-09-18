@@ -1,6 +1,6 @@
 import React from "react";
 
-function ResultPage(data) {
+export default function ResultContent(data) {
   let recipes = Object.values(data.recipe);
   recipes.sort(function(a, b) {
     return b.Importance - a.Importance;
@@ -21,12 +21,10 @@ function ResultPage(data) {
   });
 
   return (
-    <div>
+    <div className="main-content">
       There are {recipes.length} results.
       <br />
       {recipeList}
     </div>
   );
 }
-
-export default ResultPage;

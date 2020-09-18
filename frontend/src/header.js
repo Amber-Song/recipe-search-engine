@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function Header() {
+export default function Header() {
   return (
-    <div>
+    <div className="title-bar center">
       Do you have got no idea how to deal with the remained veges? Search on{" "}
       <Link to="/SearchEngine" className="bold title-link">
         UsedUpRemaining
@@ -12,5 +12,3 @@ function Header() {
     </div>
   );
 }
-
-export default Header;
