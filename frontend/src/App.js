@@ -19,6 +19,8 @@ function App() {
   const [ingredients, setIngredients] = useState("");
   const [recipeData, setRecipeData] = useState({});
 
+  document.title = "UsedUpRemaining";
+
   const changeIngredients = newIngredients => {
     setIngredients(newIngredients);
   };
@@ -40,24 +42,22 @@ function App() {
       <div className="page">
         <Switch>
           <Route path={`/SearchEngine/list`}>
-            <div className="title-bar center">
-              <Header />
-              <SearchingInput
-                changeIngredients={changeIngredients}
-                queryIngredients={queryIngredients}
-                ingredients={ingredients}
-              />
-            </div>
+            <Header
+              path=""
+              changeIngredients={changeIngredients}
+              queryIngredients={queryIngredients}
+              ingredients={ingredients}
+            />
 
             <ResultContent recipe={recipeData} />
           </Route>
 
           <Route path={`/SearchEngine`}>
-            <Header />
+            <Header path="index" />
 
-            <div className="index-content">
+            <main className="index-content">
               <div className="center">
-                <div className="title">UsedUpRemaining</div>
+                <h1>UsedUpRemaining</h1>
                 <SearchingInput
                   changeIngredients={changeIngredients}
                   queryIngredients={queryIngredients}
@@ -65,7 +65,7 @@ function App() {
                 />
                 <InputRequirement />
               </div>
-            </div>
+            </main>
           </Route>
         </Switch>
       </div>

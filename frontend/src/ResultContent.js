@@ -21,10 +21,10 @@ export default function ResultContent(data) {
   });
 
   return (
-    <div className="main-content">
+    <main className="main-content">
       There are {recipes.length} results.
       <br />
       {recipeList}
-    </div>
+    </main>
   );
 }
