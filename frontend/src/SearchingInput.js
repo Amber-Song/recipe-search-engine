@@ -46,6 +46,12 @@ const SearchingInput = ({
     history.push("/searchengine/list/" + query);
   };
 
+  const enterQueryIngredients = event => {
+    if (event.keyCode === 13) {
+      queryIngredients(propsIngredients);
+    }
+  };
+
   return (
     <div>
       <input
@@ -53,6 +59,7 @@ const SearchingInput = ({
         placeholder="UsedUpRemaining"
         value={propsIngredients}
         onChange={event => changeIngredients(event.target.value)}
+        onKeyDown={event => enterQueryIngredients(event)}
       />
       <button onClick={() => queryIngredients(propsIngredients)}>Search</button>
     </div>
