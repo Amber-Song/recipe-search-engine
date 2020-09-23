@@ -22,27 +22,29 @@ const SearchingInput = ({
     }
   }, []);
 
-  const queryIngredients = () => {
+  const fetchQuery = query => {
     let url = host + "/searchengine/api";
     axios
       .get(url, {
         params: {
-          ingredients: propsIngredients || param.ingredients
+          ingredients: query
         }
       })
       .then(res => {
         setRecipeData(res.data);
-        history.push(
-          "/searchengine/list/" + (propsIngredients || param.ingredients)
-        );
       });
   };
 
   useEffect(() => {
     if (param.ingredients) {
-      queryIngredients();
+      fetchQuery(param.ingredients);
     }
   }, []);
+
+  const queryIngredients = query => {
+    fetchQuery(query);
+    history.push("/searchengine/list/" + query);
+  };
 
   return (
     <div>
@@ -52,7 +54,7 @@ const SearchingInput = ({
         value={propsIngredients}
         onChange={event => changeIngredients(event.target.value)}
       />
-      <button onClick={queryIngredients}>Search</button>
+      <button onClick={() => queryIngredients(propsIngredients)}>Search</button>
     </div>
   );
 };
