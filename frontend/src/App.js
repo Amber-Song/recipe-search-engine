@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  useHistory
-} from "react-router-dom";
-import axios from "axios";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 
 import Header from "./Header";
@@ -14,8 +8,6 @@ import InputRequirement from "./InputRequirement";
 import ResultContent from "./ResultContent";
 
 function App() {
-  const history = useHistory();
-  console.log("History: ", history);
   const [ingredients, setIngredients] = useState("");
   const [recipeData, setRecipeData] = useState({});
 
@@ -25,27 +17,15 @@ function App() {
     setIngredients(newIngredients);
   };
 
-  const queryIngredients = path => {
-    axios
-      .get(`http://localhost:8080`, {
-        params: { ingredients: ingredients }
-      })
-      .then(res => {
-        setRecipeData(res.data);
-        console.log("Path: ", path);
-        // TODO: how to jump to the next page?
-      });
-  };
-
   return (
     <Router>
       <div className="page">
         <Switch>
-          <Route path={`/SearchEngine/list`}>
+          <Route path={`/SearchEngine/list/:ingredients`}>
             <Header
               path=""
               changeIngredients={changeIngredients}
-              queryIngredients={queryIngredients}
+              setRecipeData={d => setRecipeData(d)}
               ingredients={ingredients}
             />
 
@@ -60,7 +40,7 @@ function App() {
                 <h1>UsedUpRemaining</h1>
                 <SearchingInput
                   changeIngredients={changeIngredients}
-                  queryIngredients={queryIngredients}
+                  setRecipeData={d => setRecipeData(d)}
                   ingredients={ingredients}
                 />
                 <InputRequirement />

@@ -15,14 +15,14 @@ export default function Header(props) {
   );
 
   const header =
-    props.path == "index" ? (
+    props.path === "index" ? (
       <header className="title-bar center">{indexHeader}</header>
     ) : (
       <header className="title-bar center">
         {indexHeader}
         <SearchingInput
           changeIngredients={props.changeIngredients}
-          queryIngredients={props.queryIngredients}
+          setRecipeData={props.setRecipeData}
           ingredients={props.ingredients}
         />
       </header>
