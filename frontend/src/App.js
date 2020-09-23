@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 
-import Header from "./Header";
+import Header from "./header";
 import SearchingInput from "./SearchingInput";
 import InputRequirement from "./InputRequirement";
 import ResultContent from "./ResultContent";
