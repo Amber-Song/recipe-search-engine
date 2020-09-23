@@ -13,29 +13,35 @@ const SearchingInput = ({
   const host =
     process.env.NODE_ENV === "development" ? "http://localhost:5000" : "";
 
-  if (
-    propsIngredients === undefined ||
-    (propsIngredients === "" && param.ingredients)
-  ) {
-    setIngredients(param.ingredients);
-  }
+  useEffect(() => {
+    if (
+      propsIngredients === undefined ||
+      (propsIngredients === "" && param.ingredients)
+    ) {
+      setIngredients(param.ingredients);
+    }
+  }, []);
 
   const queryIngredients = () => {
     let url = host + "/searchengine/api";
     axios
       .get(url, {
         params: {
-          ingredients: propsIngredients
+          ingredients: propsIngredients || param.ingredients
         }
       })
       .then(res => {
         setRecipeData(res.data);
-        history.push("/searchengine/list/" + propsIngredients);
+        history.push(
+          "/searchengine/list/" + (propsIngredients || param.ingredients)
+        );
       });
   };
 
   useEffect(() => {
-    queryIngredients();
+    if (param.ingredients) {
+      queryIngredients();
+    }
   }, []);
 
   return (
