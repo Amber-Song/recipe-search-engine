@@ -26,6 +26,7 @@ function App() {
               path=""
               changeIngredients={changeIngredients}
               setRecipeData={d => setRecipeData(d)}
+              setIngredients={d => setIngredients(d)}
               ingredients={ingredients}
             />
 
@@ -41,7 +42,8 @@ function App() {
                 <SearchingInput
                   changeIngredients={changeIngredients}
                   setRecipeData={d => setRecipeData(d)}
-                  ingredients={ingredients}
+                  setIngredients={d => setIngredients(d)}
+                  propsIngredients={ingredients}
                 />
                 <InputRequirement />
               </div>

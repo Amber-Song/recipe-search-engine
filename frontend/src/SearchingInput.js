@@ -2,30 +2,39 @@ import React, { useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import axios from "axios";
 
-const SearchingInput = ({ ingredients, setRecipeData, changeIngredients }) => {
+const SearchingInput = ({
+  changeIngredients,
+  setRecipeData,
+  propsIngredients,
+  setIngredients
+}) => {
   const history = useHistory();
   const param = useParams();
+  const host =
+    process.env.NODE_ENV === "development" ? "http://localhost:5000" : "";
+
+  if (
+    propsIngredients === undefined ||
+    (propsIngredients === "" && param.ingredients)
+  ) {
+    setIngredients(param.ingredients);
+  }
 
   const queryIngredients = () => {
     axios
-      .get(`http://localhost:8080`, {
+      .get(host, {
         params: {
-          ingredients: ingredients === "" ? param.ingredients : ingredients
+          ingredients: propsIngredients
         }
       })
       .then(res => {
         setRecipeData(res.data);
-        history.push(
-          "/SearchEngine/list/" +
-            (ingredients === "" ? param.ingredients : ingredients)
-        );
+        history.push("/SearchEngine/list/" + propsIngredients);
       });
   };
 
   useEffect(() => {
-    if (ingredients === "") {
-      queryIngredients();
-    }
+    queryIngredients();
   }, []);
 
   return (
@@ -33,7 +42,7 @@ const SearchingInput = ({ ingredients, setRecipeData, changeIngredients }) => {
       <input
         className="query-input"
         placeholder="UsedUpRemaining"
-        value={param.ingredients}
+        value={propsIngredients}
         onChange={event => changeIngredients(event.target.value)}
       />
       <button onClick={queryIngredients}>Search</button>

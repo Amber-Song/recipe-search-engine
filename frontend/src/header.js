@@ -3,7 +3,13 @@ import { Link } from "react-router-dom";
 
 import SearchingInput from "./SearchingInput";
 
-const Header = ({ path, changeIngredients, setRecipeData, ingredients }) => {
+const Header = ({
+  path,
+  changeIngredients,
+  setRecipeData,
+  ingredients,
+  setIngredients
+}) => {
   const indexHeader = (
     <div>
       Do you have got no idea how to deal with the remained veges? Search on{" "}
@@ -23,7 +29,8 @@ const Header = ({ path, changeIngredients, setRecipeData, ingredients }) => {
         <SearchingInput
           changeIngredients={changeIngredients}
           setRecipeData={setRecipeData}
-          ingredients={ingredients}
+          setIngredients={setIngredients}
+          propsIngredients={ingredients}
         />
       </header>
     );
