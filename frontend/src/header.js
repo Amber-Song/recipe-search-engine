@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import SearchingInput from "./SearchingInput";
 
-export default function Header(props) {
+const Header = ({ path, changeIngredients, setRecipeData, ingredients }) => {
   const indexHeader = (
     <div>
       Do you have got no idea how to deal with the remained veges? Search on{" "}
@@ -15,18 +15,20 @@ export default function Header(props) {
   );
 
   const header =
-    props.path === "index" ? (
+    path === "index" ? (
       <header className="title-bar center">{indexHeader}</header>
     ) : (
       <header className="title-bar center">
         {indexHeader}
         <SearchingInput
-          changeIngredients={props.changeIngredients}
-          setRecipeData={props.setRecipeData}
-          ingredients={props.ingredients}
+          changeIngredients={changeIngredients}
+          setRecipeData={setRecipeData}
+          ingredients={ingredients}
         />
       </header>
     );
 
   return header;
-}
+};
+
+export default Header;

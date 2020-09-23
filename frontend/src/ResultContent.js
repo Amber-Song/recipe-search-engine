@@ -1,7 +1,7 @@
 import React from "react";
 
-export default function ResultContent(data) {
-  let recipes = Object.values(data.recipe);
+const ResultContent = ({ receivedRecipe }) => {
+  let recipes = Object.values(receivedRecipe);
   recipes.sort(function(a, b) {
     return b.Importance - a.Importance;
   });
@@ -27,4 +27,6 @@ export default function ResultContent(data) {
       {recipeList}
     </main>
   );
-}
+};
+
+export default ResultContent;

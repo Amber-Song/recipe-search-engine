@@ -29,7 +29,7 @@ function App() {
               ingredients={ingredients}
             />
 
-            <ResultContent recipe={recipeData} />
+            <ResultContent receivedRecipe={recipeData} />
           </Route>
 
           <Route path={`/SearchEngine`}>
