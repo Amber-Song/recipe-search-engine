@@ -21,15 +21,16 @@ const SearchingInput = ({
   }
 
   const queryIngredients = () => {
+    let url = host + "/searchengine/api";
     axios
-      .get(host, {
+      .get(url, {
         params: {
           ingredients: propsIngredients
         }
       })
       .then(res => {
         setRecipeData(res.data);
-        history.push("/SearchEngine/list/" + propsIngredients);
+        history.push("/searchengine/list/" + propsIngredients);
       });
   };
 

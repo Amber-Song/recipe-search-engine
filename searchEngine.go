@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"strings"
 )
@@ -41,6 +42,9 @@ func searchingHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 
 	data := r.URL.Query()["ingredients"]
+	if len(data) == 0 {
+		return
+	}
 	ingredients := getIngredientsList(data[0])
 
 	recipeResult := make(map[int]RecipeDB, 0)
@@ -58,6 +62,17 @@ func searchingHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(b)
 }
 
+func indexHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	if r.Method == "OPTIONS" {
+		return
+	}
+
+	b, err := ioutil.ReadFile("frontend/build/index.html")
+	printErr(err)
+	w.Write(b)
+}
+
 func main() {
 	createDB()
 
@@ -65,6 +80,14 @@ func main() {
 	err := walkThroughFiles()
 	printErr(err)
 
-	http.HandleFunc("/", searchingHandler)
+	http.Handle("/static/js/", http.StripPrefix("/static/js/", http.FileServer(http.Dir("frontend/build/static/js/"))))
+	http.Handle("/static/css/", http.StripPrefix("/static/css/", http.FileServer(http.Dir("frontend/build/static/css/"))))
+
+	http.HandleFunc("/searchengine/api", searchingHandler)
+	http.HandleFunc("/searchengine/list/", indexHandler)
+	http.HandleFunc("/searchengine/list", indexHandler)
+	http.HandleFunc("/searchengine/", indexHandler)
+	http.HandleFunc("/searchengine", indexHandler)
+
 	fmt.Println(http.ListenAndServe(":5000", nil))
 }

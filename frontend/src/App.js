@@ -21,7 +21,7 @@ function App() {
     <Router>
       <div className="page">
         <Switch>
-          <Route path={`/SearchEngine/list/:ingredients`}>
+          <Route path={`/searchengine/list/:ingredients`}>
             <Header
               path=""
               changeIngredients={changeIngredients}
@@ -33,7 +33,7 @@ function App() {
             <ResultContent receivedRecipe={recipeData} />
           </Route>
 
-          <Route path={`/SearchEngine`}>
+          <Route path={`/searchengine`}>
             <Header path="index" />
 
             <main className="index-content">
