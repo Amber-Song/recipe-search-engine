@@ -1,7 +1,7 @@
 import React from "react";
 
-const ResultContent = ({ receivedRecipe }) => {
-  let recipes = Object.values(receivedRecipe);
+const ResultContent = ({ receivedRecipes }) => {
+  let recipes = Object.values(receivedRecipes);
   recipes.sort(function(a, b) {
     return b.Importance - a.Importance;
   });

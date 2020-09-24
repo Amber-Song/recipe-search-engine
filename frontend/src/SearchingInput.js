@@ -1,29 +1,15 @@
 import React, { useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 
-const SearchingInput = ({
-  changeIngredients,
-  setRecipeData,
-  propsIngredients,
-  setIngredients
-}) => {
+const SearchingInput = ({ ingredients, setIngredients, setRecipeData }) => {
   const history = useHistory();
-  const param = useParams();
   const host =
     process.env.NODE_ENV === "development" ? "http://localhost:5000" : "";
 
-  useEffect(() => {
-    if (
-      propsIngredients === undefined ||
-      (propsIngredients === "" && param.ingredients)
-    ) {
-      setIngredients(param.ingredients);
-    }
-  }, []);
-
   const fetchQuery = query => {
     let url = host + "/searchengine/api";
+
     axios
       .get(url, {
         params: {
@@ -35,33 +21,31 @@ const SearchingInput = ({
       });
   };
 
-  useEffect(() => {
-    if (param.ingredients) {
-      fetchQuery(param.ingredients);
-    }
-  }, []);
-
   const queryIngredients = query => {
     fetchQuery(query);
     history.push("/searchengine/list/" + query);
   };
 
-  const enterQueryIngredients = event => {
-    if (event.keyCode === 13) {
-      queryIngredients(propsIngredients);
+  const queryIngredientsByEnter = (keyCode, query) => {
+    if (keyCode === 13) {
+      queryIngredients(query);
     }
   };
+
+  useEffect(() => {
+    fetchQuery(ingredients);
+  }, []);
 
   return (
     <div>
       <input
         className="query-input"
         placeholder="UsedUpRemaining"
-        value={propsIngredients}
-        onChange={event => changeIngredients(event.target.value)}
-        onKeyDown={event => enterQueryIngredients(event)}
+        value={ingredients}
+        onChange={event => setIngredients(event.target.value)}
+        onKeyDown={event => queryIngredientsByEnter(event.keyCode, ingredients)}
       />
-      <button onClick={() => queryIngredients(propsIngredients)}>Search</button>
+      <button onClick={() => queryIngredients(ingredients)}>Search</button>
     </div>
   );
 };
